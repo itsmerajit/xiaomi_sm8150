@@ -42,6 +42,9 @@
 
 #include "dsi_panel_mi.h"
 
+#ifdef CONFIG_KLAPSE
+#include "../sde/klapse.h"
+#endif
 
 /**
  * topology is currently defined by a set of following 3 values:
@@ -561,6 +564,10 @@ static int dsi_panel_tx_cmd_set(struct dsi_panel *panel,
 		return -EINVAL;
 
 	mode = panel->cur_mode;
+
+#ifdef CONFIG_KLAPSE
+	set_rgb_slider(bl_lvl);
+#endif
 
 	cmds = mode->priv_info->cmd_sets[type].cmds;
 	count = mode->priv_info->cmd_sets[type].count;
